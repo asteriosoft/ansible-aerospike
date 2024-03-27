@@ -1,0 +1,29 @@
+- name: "Include OS specific variables"
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Getting aerospike-prometheus-exporter package
+  get_url:
+    url: "https://github.com/aerospike/aerospike-prometheus-exporter/releases/download/v{{ aerospike_exporter_version }}/aerospike-prometheus-exporter_{{ aerospike_exporter_version }}_{{ aerospike_exporter_package_suffix }}"
+    dest: "/tmp/aerospike-prometheus-exporter-{{ aerospike_exporter_version }}-{{ aerospike_exporter_package_suffix }}"
+    mode: 0444
+
+- name: Install aerospike-prometheus-exporter (RHEL)
+  yum:
+    name: "/tmp/aerospike-prometheus-exporter-{{ aerospike_exporter_version }}-{{ aerospike_exporter_package_suffix }}"
+    state: present
+  when: ansible_os_family == 'RedHat'
+  ignore_errors: '{{ ansible_check_mode }}'
+
+- name: Install aerospike-prometheus-exporter (Debian)
+  apt:
+    deb: "/tmp/aerospike-prometheus-exporter-{{ aerospike_exporter_version }}-{{ aerospike_exporter_package_suffix }}"
+    state: present
+  when: ansible_os_family == 'Debian'
+  ignore_errors: '{{ ansible_check_mode }}'
+
+- name: Starting aerospike-prometheus-exporter
+  systemd:
+    name: aerospike-prometheus-exporter
+    state: started
+    enabled: yes
+  ignore_errors: '{{ ansible_check_mode }}'

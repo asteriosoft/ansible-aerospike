@@ -1,0 +1,2 @@
+aerospike_distro: el7
+aerospike_exporter_package_suffix: x86_64.rpm

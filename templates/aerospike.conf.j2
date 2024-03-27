@@ -1,0 +1,54 @@
+# Aerospike database configuration file for use with systemd.
+
+service {
+        node-id A{{ aerospike_node_id }}
+        proto-fd-max 100000
+        cluster-name {{ aerospike_cluster_name }}
+}
+
+logging {
+        file {{ aerospike_log_directory }}/aerospike.log {
+            context any info
+        }
+}
+
+network {
+        service {
+                address {{ aerospike_ip }}
+                port 3000
+        }
+
+        heartbeat {
+                mode mesh
+                port 3002 # Heartbeat port for this node.
+
+                # List one or more other nodes, one ip-address & port per line:
+{% for host in play_hosts %}
+                mesh-seed-address-port {{ hostvars[host].aerospike_ip }} 3002
+{% endfor %}
+
+                interval 150
+                timeout 10
+        }
+
+        fabric {
+                address {{ aerospike_ip }}
+                port 3001
+        }
+
+        info {
+                address {{ aerospike_ip }}
+                port 3003
+        }
+}
+
+{% if aerospike_namespaces is defined %}
+{{ aerospike_namespaces }}
+{% else %}
+namespace test {
+    replication-factor 1
+    memory-size 4G
+    storage-engine memory
+}
+{% endif %}
+

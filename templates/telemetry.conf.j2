@@ -1,0 +1,14 @@
+[asd]
+config-file = /etc/aerospike/aerospike.conf
+
+[logging]
+logfile = {{ aerospike_log_directory }}/telemetry.log
+loglevel = info
+
+[main]
+disable = true
+interval = 600
+home-url = https://telemetry.aerospike.com
+user = aerospike
+group = aerospike
+
