@@ -6,6 +6,7 @@
 
 - name: "Include OS specific variables"
   include_vars: "{{ ansible_os_family }}.yml"
+  tags: exporter
 
 - name: Tuning OS
   import_tasks: tuning_os.yml
