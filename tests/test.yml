@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  vars:
+    aerospike_exporter_install: true
 
   roles:
     - { role: ../../aerospike }
