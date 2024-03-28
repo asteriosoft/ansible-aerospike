@@ -11,6 +11,7 @@ aerospike_cluster_name: default
 
 # For AWS
 #aerospike_ip: "{{ private_ip_address }}"
+#aerospike_node_id: "{{ tags.Node_id }}"
 
 # For GCP
 #aerospike_ip: "{{ private_ip }}"
