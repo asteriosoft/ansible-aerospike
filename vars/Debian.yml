@@ -1,2 +1,2 @@
 aerospike_distro: ubuntu22.04
-aerospike_exporter_package_suffix: amd64.deb
+aerospike_exporter_package_suffix: '{{ aerospike_exporter_arch }}.deb'

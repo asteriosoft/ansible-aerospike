@@ -50,4 +50,5 @@ aerospike_node_id: "{{ play_hosts.index(inventory_hostname) }}"
 aerospike_tune_os: true
 
 aerospike_exporter_install: false
+aerospike_exporter_arch: "x86_64"
 aerospike_exporter_version: "1.13.0"
